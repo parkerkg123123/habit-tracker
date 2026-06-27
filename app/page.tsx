@@ -27,6 +27,11 @@ export default function Home() {
     CompletedHabit.completed = true;
     setHabits((prev) => [...prev]);
   }
+  
+  function Uncomplete(SelectedHabit: Habit) {
+    SelectedHabit.completed = false;
+    setHabits((prev) => [...prev]);
+  }
 
   function DeleteHabit(DeletedHabit: Habit) {
     setHabits(habits.filter((habit) => habit.id !== DeletedHabit.id));
@@ -47,7 +52,7 @@ export default function Home() {
           <h1 id="HabitName" className="text-xl mt-4">{habit.completed ? '✓' : '✗'} {habit.name}</h1>
           <p className="text-[18px] mt-2 ml-23" style={{color: habit.completed ? "#6eeb74" : "rgb(190,190,190)"}}>{habit.completed ? 'Completed Today' : 'Not Completed'}</p>
           <div className="flex mt-3 flex-row gap-4 items-center justify-center w-full">
-            <button className="text-[18px] bg-green-500 w-fit h-fit p-2 rounded-[4px] text-gray-200 cursor-pointer" onClick={() => SetComplete(habit)}>Complete</button>
+            <button className={`text-[18px] ${habit.completed ? 'bg-red-500' : 'bg-green-500'} w-fit h-fit p-2 rounded-[4px] text-gray-200 cursor-pointer`} onClick={habit.completed ? () => Uncomplete(habit) : () => SetComplete(habit)}>{habit.completed ? "Incomplete" : "Complete"}</button>
             <button className="text-[18px] bg-red-500 w-fit h-fit p-2 rounded-[4px] text-gray-200 cursor-pointer" onClick={() => DeleteHabit(habit)}>Delete</button>
             <button className="text-[18px] bg-gray-300 w-fit h-fit p-2 rounded-[4px] text-black cursor-pointer" onClick={() => EditHabit(habit)}>Edit</button>
           </div>
