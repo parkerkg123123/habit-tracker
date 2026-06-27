@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 import { Habit } from "./data/habit";
 
-
 export default function Home() {
 
   const date = new Date().getDate();
@@ -127,7 +126,7 @@ export default function Home() {
         </div>
         <div className="flex flex-row justify-center items-center min-w-screen mt-[40px] ml-[11vh] gap-3">
             <input maxLength={80} onChange={(e) => setHabit(e.target.value)} type="text" className="bg-[#4A6C6F] text-white p-2 rounded-[4px] placeholder-white border-2 border-slate-400" placeholder="Habit Name"/>
-            <button className="bg-[#4A6C6F] text-white p-2 px-4 rounded-[4px] placeholder-white border-2 border-slate-400 font-semibold text-[16px]" onClick={() => AddHabit({name: habit, completed: false, id: crypto.randomUUID(), date: new Date().getDate()})}>Add Habit</button>
+            <button id="add" className="bg-[#4A6C6F] text-white p-2 px-4 rounded-[4px] placeholder-white border-2 border-slate-400 font-semibold text-[16px]" onClick={() => AddHabit({name: habit, completed: false, id: crypto.randomUUID(), date: new Date().getDate()})}>Add Habit</button>
         </div>
         <div className="flex flex-col items-center justify-center min-w-screen">
             <AddHabitPers/>

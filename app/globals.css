@@ -36,3 +36,11 @@ h1, p, div {
 #subText {
   font-family: CamingCode_BI;
 }
+
+input {
+  background-color: #131f19;
+}
+
+button#add {
+  background-color: #1f382b;
+}
