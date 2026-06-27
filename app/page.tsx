@@ -5,16 +5,27 @@ import { Habit } from "./data/habit";
 
 export default function Home() {
 
+  const date = new Date().getDate();
+
   const [habit, setHabit] = useState("");
   const [habits, setHabits] = useState<Habit[]>([]);
   let completedHabits = habits.filter((habit) => habit.completed === true);
 
   useEffect(() => {
-    const savedHabits = localStorage.getItem("Habits")
+    const savedHabits = localStorage.getItem("Habits");
 
     if (savedHabits) {
       const parsedHabits = JSON.parse(savedHabits);
-      setHabits(parsedHabits);
+
+      const updatedHabits = parsedHabits.map((habit: Habit) => {
+        if (habit.date !== date) {
+          return { ...habit, completed: false, date };
+        }
+
+        return habit;
+      });
+
+      setHabits(updatedHabits);
     }
   }, []);
 
@@ -24,8 +35,13 @@ export default function Home() {
   }, [habits]);
 
   function SetComplete(CompletedHabit: Habit) {
-    CompletedHabit.completed = true;
-    setHabits((prev) => [...prev]);
+    setHabits(prev =>
+      prev.map(habit =>
+        habit.id === CompletedHabit.id
+          ? { ...habit, completed: true, date }
+          : habit
+      )
+    );
   }
   
   function Uncomplete(SelectedHabit: Habit) {
@@ -48,9 +64,9 @@ export default function Home() {
 
   function HabitCard({ habit }: { habit: Habit }) {
     return (
-      <div id="HabitCard" className={`max-h-[20vh] h-[15vh] min-h-[12.5vh] border-2 rounded-[6px] text-white flex items-start justify-start px-6 flex-col ${habit.completed ? 'border-[#246d41]' : 'border-[rgb(49,52,66)]'}`} style={{background: habit.completed ? '#141e18' : 'rgb(27, 29, 37)'}}>
-          <h1 id="HabitName" className="text-xl mt-4">{habit.completed ? '✓' : '✗'} {habit.name}</h1>
-          <p className="text-[18px] mt-2 ml-23" style={{color: habit.completed ? "#6eeb74" : "rgb(190,190,190)"}}>{habit.completed ? 'Completed Today' : 'Not Completed'}</p>
+      <div id="HabitCard" className={` ... mb-6 break-inside-avoid border-2 rounded-[6px] text-white flex items-start justify-start px-6 py-4 flex-col ${habit.completed ? 'border-[#246d41]' : 'border-[rgb(49,52,66)]'}`} style={{background: habit.completed ? '#141e18' : 'rgb(27, 29, 37)'}}>
+          <h1 id="HabitName" className={`text-xl mt-3 break-all`}>{habit.completed ? '✓' : '✗'} {habit.name}</h1>
+          <p className="text-[18px] max-h-[48px] ml-23 mt-3" style={{color: habit.completed ? "#6eeb74" : "rgb(190,190,190)"}}>{habit.completed ? 'Completed Today' : 'Not Completed'}</p>
           <div className="flex mt-3 flex-row gap-4 items-center justify-center w-full">
             <button className={`text-[18px] ${habit.completed ? 'bg-red-500' : 'bg-green-500'} w-fit h-fit p-2 rounded-[4px] text-gray-200 cursor-pointer`} onClick={habit.completed ? () => Uncomplete(habit) : () => SetComplete(habit)}>{habit.completed ? "Incomplete" : "Complete"}</button>
             <button className="text-[18px] bg-red-500 w-fit h-fit p-2 rounded-[4px] text-gray-200 cursor-pointer" onClick={() => DeleteHabit(habit)}>Delete</button>
@@ -111,7 +127,7 @@ export default function Home() {
         </div>
         <div className="flex flex-row justify-center items-center min-w-screen mt-[40px] ml-[11vh] gap-3">
             <input onChange={(e) => setHabit(e.target.value)} type="text" className="bg-[#4A6C6F] text-white p-2 rounded-[4px] placeholder-white border-2 border-slate-400" placeholder="Habit Name"/>
-            <button className="bg-[#4A6C6F] text-white p-2 px-4 rounded-[4px] placeholder-white border-2 border-slate-400 font-semibold text-[16px]" onClick={() => AddHabit({name: habit, completed: false, id: crypto.randomUUID()})}>Add Habit</button>
+            <button className="bg-[#4A6C6F] text-white p-2 px-4 rounded-[4px] placeholder-white border-2 border-slate-400 font-semibold text-[16px]" onClick={() => AddHabit({name: habit, completed: false, id: crypto.randomUUID(), date: new Date().getDate()})}>Add Habit</button>
         </div>
         <div className="flex flex-col items-center justify-center min-w-screen">
             <AddHabitPers/>
@@ -120,7 +136,7 @@ export default function Home() {
         <div className="flex flex-col items-center min-w-screen mt-[40px] ml-[10vh] gap-3 text-4xl font-bold text-[rgb(220,220,220)]">
           Habits
           <CompletedCounter/>
-            <div className="mt-[48px] grid grid-cols-2 grid-rows-3 gap-4 w-[40%] items-center max-w-5xl mx-auto">
+            <div className="mt-[48px] columns-1 lg:columns-2 gap-6 w-[40%] items-center max-w-5xl mx-auto">
               {habits
               .map((HabitData, index) => (
                 <HabitCard key={HabitData.id} habit={HabitData}/>
