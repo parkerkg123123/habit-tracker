@@ -34,9 +34,9 @@ export default function Home() {
 
   function HabitCard({ habit }: { habit: Habit }) {
     return (
-      <div className="max-h-[20vh] h-[15vh] w-[30vh] max-w-[35vh] min-w-[20vh] min-h-[12.5vh] ml-[1.5vh] rounded-[6px] bg-slate-700 text-white flex items-start justify-start px-6 flex-col ">
+      <div className="max-h-[20vh] h-[15vh] w-[30vh] max-w-[35vh] min-w-[20vh] min-h-[12.5vh] ml-[1.5vh] rounded-[6px] bg-[#4A6C6F] text-white flex items-start justify-start px-6 flex-col ">
           <h1 className="text-xl mt-4">{habit.completed ? '✓' : '✗'} {habit.name}</h1>
-          <p className="text-[18px] mt-2" style={{color: habit.completed ? "green" : "red"}}>{habit.completed ? 'Completed Today' : 'Not Completed'}</p>
+          <p className="text-[18px] mt-2" style={{color: habit.completed ? "#8CD790" : "red"}}>{habit.completed ? 'Completed Today' : 'Not Completed'}</p>
           <div className="flex mt-3 flex-row gap-4">
             <button className="text-[18px] bg-slate-600 w-fit h-fit p-2 rounded-[4px] text-green-300 cursor-pointer" onClick={() => SetComplete(habit)}>Complete</button>
             <button className="text-[18px] bg-slate-600 w-fit h-fit p-2 rounded-[4px] text-red-300 cursor-pointer" onClick={() => DeleteHabit(habit)}>Delete</button>
@@ -74,21 +74,21 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-slate-950 text-white flex items-start justify-start px-6 flex-col gap-8">
+    <main className="min-h-screen bg-[#D7FFF1] text-white flex items-start justify-start px-6 flex-col gap-2">
         <div className="flex flex-col items-start min-w-screen mt-12 ml-[10vh] gap-3">
-          <h1 className="text-4xl font-bold text-[rgb(187,220,252)]">Habit Tracker</h1>
-          <p className="text-[16px] font-bold text-[rgb(220,221,227)] ml-3">Keep track of your daily habits.</p>
+          <h1 id="Title" className="text-6xl font-bold text-[#8CD790]">Habit Tracker</h1>
+          <p className="text-[16px] font-bold text-[#8CD790] ml-3">Keep track of your daily habits.</p>
 
         </div>
         <div className="flex flex-col items-start min-w-screen mt-6 ml-[11vh] gap-3">
-            <input onChange={(e) => setHabit(e.target.value)} type="text" className="bg-slate-600 p-2 rounded-[4px] placeholder-white border-2 border-slate-400" placeholder="Habit Name"/>
+            <input onChange={(e) => setHabit(e.target.value)} type="text" className="bg-[#4A6C6F] text-white p-2 rounded-[4px] placeholder-white border-2 border-slate-400" placeholder="Habit Name"/>
             <div className="flex flex-col items-center gap-1">
-              <button className="bg-slate-700 p-2 px-4 rounded-[4px] placeholder-white border-2 border-slate-400 font-semibold text-[16px]" onClick={() => AddHabit({name: habit, completed: false, id: crypto.randomUUID()})}>Add Habit</button>
+              <button className="bg-[#4A6C6F] text-white p-2 px-4 rounded-[4px] placeholder-white border-2 border-slate-400 font-semibold text-[16px]" onClick={() => AddHabit({name: habit, completed: false, id: crypto.randomUUID()})}>Add Habit</button>
               <AddHabitPers/>
             </div>
         </div>
 
-        <div className="flex flex-col items-start min-w-screen mt-6 ml-[10vh] gap-3 text-4xl font-bold text-[rgb(187,220,252)]">
+        <div className="flex flex-col items-start min-w-screen mt-6 ml-[10vh] gap-3 text-4xl font-bold text-[rgb(220,220,220)]">
           Habits
           <CompletedCounter/>
             <div className="mt-4 grid grid-cols-3 grid-rows-3 gap-4">

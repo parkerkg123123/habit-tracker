@@ -4,3 +4,13 @@ html, body {
   overflow-x: hidden;
   overflow-y: auto;
 }
+
+@font-face {
+  font-family: CamingCode_Bold;
+  src: url(./fonts/CamingoCode-Bold.ttf);
+}
+
+h1, p, div {
+  font-family: CamingCode_Bold;
+  color: #8CD790;
+}
